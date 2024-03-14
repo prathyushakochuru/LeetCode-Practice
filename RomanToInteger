@@ -1,0 +1,47 @@
+public class Solution {
+    public static char GetKey(Dictionary<char, int> romanMap, int num)
+    {
+        var key = romanMap.FirstOrDefault(x=>x.Value == num);
+        return key.Key;
+    }
+    public int RomanToInt(string s) {
+        Dictionary<char, int> romanMap = new Dictionary<char, int>();
+     romanMap.Add('I', 1);
+     romanMap.Add('V', 5);
+     romanMap.Add('X', 10);
+     romanMap.Add('L', 50);
+     romanMap.Add('C', 100);
+     romanMap.Add('D', 500);
+     romanMap.Add('M', 1000);
+ 
+     int number = 0;
+     int len = s.Length-1;
+ 
+     for(int i = 0;i<=len;i++)
+     {
+         
+         if ((i!=0 && i<len)&& (GetKey(romanMap, romanMap[s[i]]) == 'I'  &&(GetKey(romanMap, romanMap[s[i+1]]) == 'V' || GetKey(romanMap, romanMap[s[i + 1]]) == 'X')))
+         {
+             number = number + (romanMap[s[i + 1]] - romanMap[s[i]]);
+             i++;
+         }
+         else if ((i!=0 && i<len) && (GetKey(romanMap, romanMap[s[i]]) == 'X' && (GetKey(romanMap, romanMap[s[i + 1]]) == 'L' || GetKey(romanMap, romanMap[s[i + 1]]) == 'C')))
+         {
+             number = number + (romanMap[s[i + 1]] - romanMap[s[i]]);
+             i++;
+         }
+         else if ((i!=0 && i<len) && (GetKey(romanMap, romanMap[s[i]]) == 'C' && (GetKey(romanMap, romanMap[s[i + 1]]) == 'D' || GetKey(romanMap, romanMap[s[i + 1]]) == 'M')))
+         {
+               
+             number = number + (romanMap[s[i + 1]] - romanMap[s[i]]);
+             i++;
+         }
+         else
+         {
+             number += romanMap[s[i]];
+         }
+     }
+     return number;
+}
+    
+}
